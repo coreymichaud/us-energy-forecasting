@@ -1,15 +1,13 @@
-import argparse
-import datetime
 import logging
 import os
 import sys
 
 from dotenv import load_dotenv
 
-from etl.extract import get_api_data
-from etl.transform import transform_data
-from etl.validate import build_expectation_suite
-from etl.load import load_to_feast
+from feature_pipeline.etl.extract import get_api_data
+from feature_pipeline.etl.transform import transform_data
+from feature_pipeline.etl.validate import build_expectation_suite
+from feature_pipeline.etl.load import load_to_feast
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -57,14 +55,6 @@ def run_pipeline(start_date: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="EIA electricity data ETL pipeline")
-    parser.add_argument(
-        "--start-date",
-        default=datetime.date.today().isoformat(),
-        help="Start date for the EIA API pull, format YYYY-MM-DD (default: today)",
-    )
-    args = parser.parse_args()
-
-    store = run_pipeline(start_date=args.start_date)
+    store = run_pipeline(start_date="2026-07-19")
     if store is None:
         sys.exit(1)
