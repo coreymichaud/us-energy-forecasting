@@ -1,0 +1,18 @@
+[project]
+name = "us-energy-forecasting"
+version = "0.1.0"
+description = "U.S. energy consumption forecasting using U.S. Energy Information Administration data."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "feast>=0.64.0",
+    "python-dotenv>=1.2.2",
+    "requests>=2.34.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.15.22",
+]
