@@ -22,7 +22,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
 if __name__ == "__main__":
     import os
     from dotenv import load_dotenv
-    from extract import get_api_data
+    from feature_pipeline.etl.extract import get_api_data
 
     load_dotenv()
     EIA_API_KEY = os.getenv("EIA_API_KEY")
