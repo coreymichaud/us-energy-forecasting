@@ -18,7 +18,6 @@ def save_to_offline_store(df: pd.DataFrame, path: Path = DATA_PATH) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
 
     df = df.copy()
-    # Feast needs an explicit event timestamp column for the offline source
     df["event_timestamp"] = pd.to_datetime(df["period"])
 
     df.to_parquet(path, index=False)
@@ -27,19 +26,6 @@ def save_to_offline_store(df: pd.DataFrame, path: Path = DATA_PATH) -> Path:
 
 
 def define_feature_store_objects(data_path: Path):
-    """
-    Defines the entities, source, and feature view for the EIA region data,
-    with `description` documenting what each field is and what validation
-    was run on it in validate.py.
-
-    Design note: a single row is uniquely identified by
-    (respondent, type, period) - e.g. "PJM Interconnection, LLC" has
-    separate rows for demand ("D"), net generation ("NG"), and total
-    interchange ("TI") at the same timestamp. So `respondent` AND `type`
-    are both modeled as entities (a composite key). If only `respondent`
-    were used as the entity, materializing to the online store would let
-    each type overwrite the others for the same timestamp.
-    """
 
     respondent = Entity(
         name="respondent",
@@ -112,10 +98,6 @@ def define_feature_store_objects(data_path: Path):
 
 
 def load_to_feast(df: pd.DataFrame, repo_path: Path = REPO_PATH) -> FeatureStore:
-    """
-    Registers the entities/feature view with Feast (`apply`) and
-    materializes the current data into the online store.
-    """
     data_path = save_to_offline_store(df)
     respondent, measurement_type, feature_view = define_feature_store_objects(data_path)
 
@@ -151,7 +133,9 @@ if __name__ == "__main__":
 
     validation_result = build_expectation_suite(df)
     if not validation_result.success:
-        logger.warning("One or more expectations failed - review before trusting these features")
+        logger.warning(
+            "One or more expectations failed - review before trusting these features"
+        )
 
     store = load_to_feast(df)
     print(store.list_feature_views())

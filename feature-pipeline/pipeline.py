@@ -22,20 +22,11 @@ EIA_URL = (
 
 
 def run_pipeline(start_date: str):
-    """
-    Runs the full ETL pipeline: extract from the EIA API, transform,
-    validate with great_expectations, and load into Feast.
-
-    Returns the Feast FeatureStore on success, or None if the pipeline
-    was aborted (no data extracted, or missing API key).
-    """
     load_dotenv()
     api_key = os.getenv("EIA_API_KEY")
     if not api_key:
         logger.error("EIA_API_KEY not set - check your .env file")
         return None
-
-    # --- Extract ---
     logger.info(f"Extracting data starting from {start_date}")
     df = get_api_data(URL=EIA_URL, START_DATE=start_date, API_KEY=api_key)
     if df.empty:
@@ -43,19 +34,13 @@ def run_pipeline(start_date: str):
         return None
     logger.info(f"Extracted {len(df)} rows")
 
-    # --- Transform ---
     logger.info("Transforming data")
     df = transform_data(df)
     logger.info(f"Transformed data - columns: {list(df.columns)}")
 
-    # --- Validate ---
     logger.info("Validating data")
     validation_result = build_expectation_suite(df)
     if not validation_result.success:
-        # Current expectations run at 'warning' severity (see validate.py),
-        # so a failure here is a data-quality flag, not a hard stop. Change
-        # this to `return None` if you want failed expectations to block
-        # the load step instead.
         logger.warning(
             "One or more expectations failed - inspect validation_result "
             "before trusting these features"
@@ -63,7 +48,6 @@ def run_pipeline(start_date: str):
     else:
         logger.info("All expectations passed")
 
-    # --- Load ---
     logger.info("Loading data into Feast")
     store = load_to_feast(df)
     feature_view_names = [fv.name for fv in store.list_feature_views()]
