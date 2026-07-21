@@ -46,8 +46,8 @@ if __name__ == "__main__":
     from dotenv import load_dotenv
 
     load_dotenv()
-    from feature_pipeline.etl.extract import get_api_data
-    from feature_pipeline.etl.transform import transform_data
+    from extract import get_api_data
+    from transform import transform_data
 
     EIA_API_KEY = os.getenv("EIA_API_KEY")
     df = get_api_data(
