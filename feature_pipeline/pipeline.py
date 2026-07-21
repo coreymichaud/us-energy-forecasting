@@ -4,10 +4,10 @@ import sys
 
 from dotenv import load_dotenv
 
-from feature_pipeline.etl.extract import get_api_data
-from feature_pipeline.etl.transform import transform_data
-from feature_pipeline.etl.validate import build_expectation_suite
-from feature_pipeline.etl.load import load_to_feast
+from etl.extract import get_api_data
+from etl.transform import transform_data
+from etl.validate import build_expectation_suite
+from etl.load import load_to_feast
 from feast import FeatureStore
 
 logger = logging.getLogger(__name__)
