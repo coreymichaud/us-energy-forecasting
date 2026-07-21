@@ -15,6 +15,17 @@ DATA_PATH = REPO_PATH / "data" / "eia_region_data.parquet"
 
 
 def save_to_offline_store(df: pd.DataFrame, path: Path = DATA_PATH) -> Path:
+    """
+    Save the DataFrame to the offline store (Parquet file).
+
+    Args:
+        df (pd.DataFrame): The DataFrame to save.
+        path (Path, optional): The path to the Parquet file. Defaults to DATA_PATH.
+
+    Returns:
+        Path: The path to the saved Parquet file.
+    """
+
     path.parent.mkdir(parents=True, exist_ok=True)
 
     df = df.copy()
@@ -25,7 +36,16 @@ def save_to_offline_store(df: pd.DataFrame, path: Path = DATA_PATH) -> Path:
     return path
 
 
-def define_feature_store_objects(data_path: Path):
+def define_feature_store_objects(data_path: Path) -> tuple[Entity, Entity, FeatureView]:
+    """
+    Define Feast feature store objects.
+
+    Args:
+        data_path (Path): The path to the offline data source (Parquet file).
+
+    Returns:
+        Tuple[Entity, Entity, FeatureView]: The defined entity and feature view objects.
+    """
 
     respondent = Entity(
         name="respondent",
@@ -98,6 +118,16 @@ def define_feature_store_objects(data_path: Path):
 
 
 def load_to_feast(df: pd.DataFrame, repo_path: Path = REPO_PATH) -> FeatureStore:
+    """
+    Save the DataFrame to the offline store (Parquet file).
+
+    Args:
+        df (pd.DataFrame): The DataFrame to save.
+        path (Path, optional): The path to the Parquet file. Defaults to DATA_PATH.
+
+    Returns:
+        Path: The path to the saved Parquet file.
+    """
     data_path = save_to_offline_store(df)
     respondent, measurement_type, feature_view = define_feature_store_objects(data_path)
 

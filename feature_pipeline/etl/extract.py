@@ -7,6 +7,17 @@ logging.basicConfig(level=logging.INFO)
 
 
 def get_api_data(URL: str, START_DATE: str, API_KEY: str) -> pd.DataFrame:
+    """
+    Get data from the EIA API.
+
+    Args:
+        URL (str): The API endpoint URL.
+        START_DATE (str): The start date for the data query.
+        API_KEY (str): The API key for authentication.
+
+    Returns:
+        df (pd.DataFrame): API data stored as a pandas dataframe.
+    """
 
     try:
         logger.info(" Fetching data from EIA API.")

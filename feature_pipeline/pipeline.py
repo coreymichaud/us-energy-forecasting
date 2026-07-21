@@ -8,6 +8,7 @@ from feature_pipeline.etl.extract import get_api_data
 from feature_pipeline.etl.transform import transform_data
 from feature_pipeline.etl.validate import build_expectation_suite
 from feature_pipeline.etl.load import load_to_feast
+from feast import FeatureStore
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -19,7 +20,17 @@ EIA_URL = (
 )
 
 
-def run_pipeline(start_date: str):
+def run_pipeline(start_date: str) -> FeatureStore:
+    """
+    Run the ETL pipeline.
+
+    Args:
+        start_date (str): The start date for the data extraction.
+
+    Returns:
+        FeatureStore: The Feast feature store instance.
+    """
+
     load_dotenv()
     api_key = os.getenv("EIA_API_KEY")
     if not api_key:

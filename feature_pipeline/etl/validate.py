@@ -3,6 +3,16 @@ import pandas as pd
 
 
 def build_expectation_suite(df: pd.DataFrame) -> dict:
+    """
+    Build a Great Expectations suite for the given DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to validate.
+
+    Returns:
+        dict: The validation results.
+    """
+
     # Creating context
     context = gx.get_context()
 

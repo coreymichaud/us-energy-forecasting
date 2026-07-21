@@ -2,6 +2,15 @@ import pandas as pd
 
 
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Transform the input DataFrame by cleaning and reformatting the data.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame to transform.
+
+    Returns:
+        pd.DataFrame: The transformed DataFrame.
+    """
 
     # Changing period column from object to datetime
     df["period"] = pd.to_datetime(df["period"])
