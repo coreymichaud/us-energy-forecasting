@@ -11,7 +11,9 @@ dependencies = [
     "pandas>=2.3.3",
     "python-dotenv>=1.2.2",
     "requests>=2.34.2",
+    "sktime>=1.0.1",
     "streamlit>=1.59.2",
+    "wandb>=0.28.1",
     "watchdog>=6.0.0",
 ]
 

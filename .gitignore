@@ -17,3 +17,6 @@ wheels/
 
 # Data
 */data/*
+
+# Weights & Biases
+wandb/
