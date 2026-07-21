@@ -16,4 +16,4 @@ wheels/
 .ruff_cache/
 
 # Data
-feature_pipeline/data/
+*/data/*
