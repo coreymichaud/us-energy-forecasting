@@ -9,8 +9,8 @@ from feast.infra.offline_stores.file_source import SavedDatasetFileStorage
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-REPO_PATH = Path(__file__).resolve().parent.parent            # root/
-FEATURE_REPO_PATH = REPO_PATH / "feature_pipeline"             # has feature_store.yaml
+REPO_PATH = Path(__file__).resolve().parent.parent  # root/
+FEATURE_REPO_PATH = REPO_PATH / "feature_pipeline"  # has feature_store.yaml
 DATA_PATH = FEATURE_REPO_PATH / "data" / "eia_region_data.parquet"
 DATASET_PATH = REPO_PATH / "training_pipeline" / "data" / "eia_training_dataset.parquet"
 
@@ -43,9 +43,13 @@ def get_historical_features(
     anything; re-running this re-runs the join against current source data.
     """
     store = FeatureStore(repo_path=str(repo_path))
-    retrieval_job = store.get_historical_features(entity_df=entity_df, features=features)
+    retrieval_job = store.get_historical_features(
+        entity_df=entity_df, features=features
+    )
     df = retrieval_job.to_df()
-    logger.info(f"Retrieved {len(df)} rows x {len(df.columns)} cols of historical features")
+    logger.info(
+        f"Retrieved {len(df)} rows x {len(df.columns)} cols of historical features"
+    )
     return df
 
 
@@ -67,7 +71,9 @@ def save_dataset(
     instead of hoping the offline store hasn't drifted since you trained.
     """
     store = FeatureStore(repo_path=str(repo_path))
-    retrieval_job = store.get_historical_features(entity_df=entity_df, features=features)
+    retrieval_job = store.get_historical_features(
+        entity_df=entity_df, features=features
+    )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     dataset = store.create_saved_dataset(
