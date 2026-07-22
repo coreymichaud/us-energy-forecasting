@@ -4,6 +4,10 @@ This project uses the [U.S. Energy Information Administration (EIA)'s Hourly Ele
 
 COREY!!! If you fr put this on streamlit cloud, create a good gif to put here
 
+## Table of Contents
+
+- put a table of contents here
+
 ## Tools
 - **Feast** as the feature store
 - **Weights & Biases** for model experimentation, hyperparameter tuning, and metadata
@@ -22,3 +26,11 @@ installation instructions
 
 ## Run
 run instructions
+
+## NOTES DELETE LATER
+- It should be very detailed
+- Should have a table of contents
+- Should have a picture of the streamlit dashboard at the top
+- Should have a diagram of how everythign works
+- Should have a picture of the airflow workflow
+- Obviously a link to the streamlit cloud link
