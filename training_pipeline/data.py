@@ -35,12 +35,17 @@ def load_data_from_feast(
         project=os.getenv("WANDB_PROJECT"),
         name="load_training_data",
         job_type="data_loading",
-    ):
+    ) as run:
         df = pd.read_parquet(
             data_path, columns=["respondent", "type", "event_timestamp", "value"]
         )
         df = df.drop_duplicates().reset_index(drop=True)
         logger.info(f"Built entity dataframe with {len(df)} rows")
+
+        artifact = wandb.Artifact(name = "training_data", type = "dataset")
+        artifact.add_file(local_path=DATA_PATH, name = "training_dataset")
+        run.log_artifact(artifact)
+        logger.info("Logged training dataset artifact")
 
     with wandb.init(
         project=os.getenv("WANDB_PROJECT"),
