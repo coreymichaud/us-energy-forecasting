@@ -52,11 +52,16 @@ def load_data_from_feast(
         name="train_test_split",
         job_type="prepare_dataset",
     ):
+        
+        df["event_timestamp"] = pd.PeriodIndex(df["event_timestamp"], freq = "H")
+        df = df.set_index(["respondent", "type", "event_timestamp"])
         X = df.drop(columns=["value"])
         y = df["value"]
         X_train, X_test, y_train, y_test = temporal_train_test_split(
             X, y, test_size=0.2
         )
+
+
 
     return X_train, X_test, y_train, y_test
 
