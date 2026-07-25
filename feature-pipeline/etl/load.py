@@ -107,6 +107,7 @@ def define_feature_store_objects(data_path: Path) -> tuple[Entity, Entity, Featu
             ),
         ],
         source=source,
+        enable_validation=True,
         online=True,
         description=(
             "Hourly EIA electricity data (demand, net generation, total "
