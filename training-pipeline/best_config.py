@@ -10,6 +10,7 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+
 def upload(sweep_id: Optional[str] = None):
     """Upload the best config from the given sweep to the "best_experiment" wandb Artifact.
 
@@ -26,7 +27,7 @@ def upload(sweep_id: Optional[str] = None):
 
     api = wandb.Api()
     sweep = wandb.sweep(
-        f"{os.getenv("WANDB_ENTITY")}/{os.getenv("WANDB_PROJECT")}/{sweep_id}"
+        f"{os.getenv('WANDB_ENTITY')}/{os.getenv('WANDB_PROJECT')}/{sweep_id}"
     )
     best_run = sweep.best_run()
 

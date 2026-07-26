@@ -42,8 +42,8 @@ def load_data_from_feast(
         df = df.drop_duplicates().reset_index(drop=True)
         logger.info(f"Built entity dataframe with {len(df)} rows")
 
-        artifact = wandb.Artifact(name = "training_data", type = "dataset")
-        artifact.add_file(local_path=DATA_PATH, name = "training_dataset")
+        artifact = wandb.Artifact(name="training_data", type="dataset")
+        artifact.add_file(local_path=DATA_PATH, name="training_dataset")
         run.log_artifact(artifact)
         logger.info("Logged training dataset artifact")
 
@@ -52,16 +52,13 @@ def load_data_from_feast(
         name="train_test_split",
         job_type="prepare_dataset",
     ):
-        
-        df["event_timestamp"] = pd.PeriodIndex(df["event_timestamp"], freq = "H")
+        df["event_timestamp"] = pd.PeriodIndex(df["event_timestamp"], freq="H")
         df = df.set_index(["respondent", "type", "event_timestamp"])
         X = df.drop(columns=["value"])
         y = df["value"]
         X_train, X_test, y_train, y_test = temporal_train_test_split(
             X, y, test_size=0.2
         )
-
-
 
     return X_train, X_test, y_train, y_test
 

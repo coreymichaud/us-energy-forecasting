@@ -5,6 +5,7 @@ from sktime.forecasting.naive import NaiveForecaster
 from sktime.transformations.date import DateTimeFeatures
 from sktime.transformations.summarize import WindowSummarizer
 
+
 def model(config: dict):
     lag = config.pop(
         "forecaster_transformers__window_summarizer__lag_feature__lag",
